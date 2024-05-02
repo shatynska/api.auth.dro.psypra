@@ -1,14 +1,16 @@
 import { z } from 'zod';
 import { EnvSchema, env } from '../constants/env';
 
-const appConfigSchema = z.object({
+const AppConfigSchema = z.object({
   nodeEnv: EnvSchema.shape.NODE_ENV,
   port: EnvSchema.shape.PORT,
   host: EnvSchema.shape.HOST,
   logLevel: EnvSchema.shape.LOG_LEVEL,
 });
 
-export const appConfig: z.infer<typeof appConfigSchema> = {
+type AppConfigType = z.infer<typeof AppConfigSchema>;
+
+export const appConfig: AppConfigType = {
   nodeEnv: env.NODE_ENV ?? 'development',
   port: env.PORT ?? 3000,
   host: env.HOST ?? 'localhost',
