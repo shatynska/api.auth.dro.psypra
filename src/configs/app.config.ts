@@ -1,11 +1,12 @@
-import { env } from '../constants/env';
+import { z } from 'zod';
+import { EnvSchema, env } from '../constants/env';
 
-type AppConfigType = {
-  nodeEnv: string;
-  port: number;
-};
+const appConfigSchema = z.object({
+  nodeEnv: EnvSchema.shape.NODE_ENV,
+  port: EnvSchema.shape.PORT,
+});
 
-export const appConfig: AppConfigType = {
-  nodeEnv: env.NODE_ENV,
-  port: env.PORT,
+export const appConfig: z.infer<typeof appConfigSchema> = {
+  nodeEnv: env.NODE_ENV ?? 'development',
+  port: env.PORT ?? 3000,
 };
